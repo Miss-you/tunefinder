@@ -1,0 +1,7 @@
+shazamio>=0.8.1
+pydub>=0.25.1
+yt-dlp>=2024.1.0
+click>=8.1.0
+fastapi>=0.110
+uvicorn[standard]>=0.27
+python-multipart>=0.0.9

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>tunefinder · 音乐识别</title>
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+    <header>
+        <h1>🎵 tunefinder</h1>
+        <p class="subtitle">给我一段 YouTube 链接或音频，我告诉你这是哪首歌。</p>
+    </header>
+
+    <main>
+        <section class="card">
+            <div class="tabs">
+                <button class="tab active" data-tab="url">从 URL 识别</button>
+                <button class="tab" data-tab="file">从文件识别</button>
+            </div>
+
+            <div class="tab-panel" id="panel-url">
+                <label for="url-input">视频 / 音频 URL（YouTube、Bilibili 等）</label>
+                <input
+                    id="url-input"
+                    type="url"
+                    placeholder="https://www.youtube.com/shorts/r05JFAAWAZ8"
+                    value="https://www.youtube.com/shorts/r05JFAAWAZ8"
+                />
+                <button id="btn-url" class="primary">识别</button>
+            </div>
+
+            <div class="tab-panel hidden" id="panel-file">
+                <label for="file-input">上传本地音频文件（mp3 / m4a / wav / webm ...）</label>
+                <input id="file-input" type="file" accept="audio/*,video/*" />
+                <button id="btn-file" class="primary">识别</button>
+            </div>
+        </section>
+
+        <section id="status" class="card hidden"></section>
+
+        <section id="result" class="card hidden"></section>
+
+        <section id="raw" class="card hidden">
+            <details>
+                <summary>原始 Shazam 响应（JSON）</summary>
+                <pre id="raw-json"></pre>
+            </details>
+        </section>
+    </main>
+
+    <footer>
+        <span>backend: shazamio</span>
+        <span>·</span>
+        <a href="https://github.com/shazamio/ShazamIO" target="_blank" rel="noopener">shazamio</a>
+    </footer>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

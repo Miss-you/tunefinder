@@ -1,0 +1,168 @@
+:root {
+    --bg: #0e1116;
+    --card: #171b22;
+    --card-2: #1f242d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #ff5a5f;
+    --accent-2: #ffb400;
+    --ok: #3fb950;
+    --err: #f85149;
+    --border: #30363d;
+}
+
+* { box-sizing: border-box; }
+html, body {
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(ellipse at top, #1a1f2b 0%, var(--bg) 60%);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+        "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    min-height: 100vh;
+}
+
+header {
+    text-align: center;
+    padding: 48px 16px 24px;
+}
+header h1 { font-size: 40px; margin: 0; letter-spacing: 1px; }
+.subtitle { color: var(--muted); margin-top: 8px; }
+
+main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+.hidden { display: none !important; }
+
+.tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+.tab {
+    flex: 1;
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.15s;
+}
+.tab.active {
+    background: var(--card-2);
+    color: var(--text);
+    border-color: var(--accent);
+}
+
+label {
+    display: block;
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+input[type="url"], input[type="file"] {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--card-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 10px;
+    font-size: 15px;
+    outline: none;
+    margin-bottom: 14px;
+}
+input[type="url"]:focus { border-color: var(--accent); }
+
+button.primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #111;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+button.primary:hover { transform: translateY(-1px); }
+button.primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+.status-line { display: flex; align-items: center; gap: 10px; }
+.spinner {
+    width: 16px; height: 16px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.err { color: var(--err); }
+.ok { color: var(--ok); }
+
+.result-hero {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+.result-hero img {
+    width: 140px;
+    height: 140px;
+    border-radius: 12px;
+    object-fit: cover;
+    background: var(--card-2);
+}
+.result-meta h2 { margin: 0 0 4px; font-size: 22px; }
+.result-meta .artist { color: var(--muted); font-size: 16px; margin-bottom: 12px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.chip {
+    padding: 3px 10px;
+    background: var(--card-2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 12px;
+    color: var(--muted);
+}
+.links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+.links a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 14px;
+    padding: 6px 12px;
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+}
+.links a:hover { background: rgba(255, 90, 95, 0.1); }
+
+audio { width: 100%; margin-top: 16px; }
+
+pre {
+    background: #0b0e12;
+    color: #cbd5e1;
+    padding: 12px;
+    border-radius: 8px;
+    max-height: 400px;
+    overflow: auto;
+    font-size: 12px;
+}
+
+footer {
+    text-align: center;
+    padding: 30px 16px;
+    color: var(--muted);
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+footer a { color: var(--muted); }

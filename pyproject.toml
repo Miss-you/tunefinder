@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tunefinder"
+version = "0.1.0"
+description = "Universal music recognition tool (Shazamio backend) with CLI and Web UI"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "tunefinder" }]
+dependencies = [
+    "shazamio>=0.8.1",
+    "pydub>=0.25.1",
+    "yt-dlp>=2024.1.0",
+    "click>=8.1.0",
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.27",
+    "python-multipart>=0.0.9",
+]
+
+[project.optional-dependencies]
+acoustid = ["pyacoustid>=1.3.0"]
+dev = ["pytest>=8.0", "httpx>=0.27"]
+
+[project.scripts]
+tunefinder = "tunefinder.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"tunefinder.web" = ["static/*"]
