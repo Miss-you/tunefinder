@@ -1,4 +1,5 @@
 """CLI entry point."""
+
 from __future__ import annotations
 
 import json
@@ -16,7 +17,9 @@ def cli() -> None:
 
 @cli.command()
 @click.option("--url", "url", help="Video/audio URL (YouTube, Bilibili, ...)")
-@click.option("--file", "file", type=click.Path(exists=True, dir_okay=False), help="Local audio file")
+@click.option(
+    "--file", "file", type=click.Path(exists=True, dir_okay=False), help="Local audio file"
+)
 def recognize(url: str | None, file: str | None) -> None:
     """Recognize the music in the given URL or local file."""
     if not url and not file:

@@ -1,4 +1,5 @@
 """High-level orchestration: URL/file → RecognitionResult."""
+
 from __future__ import annotations
 
 from pathlib import Path

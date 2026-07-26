@@ -1,4 +1,5 @@
 """FastAPI application: JSON API + static frontend."""
+
 from __future__ import annotations
 
 import asyncio
@@ -11,7 +12,6 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from ..pipeline import recognize_from_file, recognize_from_url
-
 
 STATIC_DIR = Path(__file__).parent / "static"
 

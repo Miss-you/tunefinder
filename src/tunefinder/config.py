@@ -1,10 +1,10 @@
 """Runtime configuration."""
+
 from __future__ import annotations
 
 import os
 from dataclasses import dataclass
 from pathlib import Path
-
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_DOWNLOAD_DIR = PROJECT_ROOT / "downloads"

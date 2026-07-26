@@ -22,13 +22,48 @@ dependencies = [
 
 [project.optional-dependencies]
 acoustid = ["pyacoustid>=1.3.0"]
-dev = ["pytest>=8.0", "httpx>=0.27"]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "httpx>=0.27",
+    "ruff>=0.5.0",
+]
 
 [project.scripts]
 tunefinder = "tunefinder.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/Miss-you/tunefinder"
+Repository = "https://github.com/Miss-you/tunefinder"
+Issues = "https://github.com/Miss-you/tunefinder/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.package-data]
 "tunefinder.web" = ["static/*"]
+
+# ---------------- Tooling ----------------
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "tests"]
+extend-exclude = ["downloads", "samples", ".venv"]
+
+[tool.ruff.lint]
+# E/W = pycodestyle, F = pyflakes, I = isort, B = bugbear, UP = pyupgrade
+select = ["E", "W", "F", "I", "B", "UP"]
+ignore = [
+    "E501",  # line-too-long handled by formatter
+    "B008",  # FastAPI depends() pattern
+]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+addopts = "-ra -q"
+asyncio_mode = "auto"

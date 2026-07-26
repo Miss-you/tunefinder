@@ -1,9 +1,9 @@
 """Download audio from a URL (YouTube, Bilibili, etc.) via yt-dlp."""
+
 from __future__ import annotations
 
 import subprocess
 from pathlib import Path
-from typing import Optional
 
 
 class DownloadError(RuntimeError):
@@ -22,8 +22,10 @@ def download_audio(url: str, out_dir: Path, prefer_mp3: bool = True) -> Path:
     cmd = [
         "yt-dlp",
         "-x",
-        "--audio-quality", "0",
-        "-o", template,
+        "--audio-quality",
+        "0",
+        "-o",
+        template,
         url,
     ]
     if prefer_mp3:
@@ -32,7 +34,9 @@ def download_audio(url: str, out_dir: Path, prefer_mp3: bool = True) -> Path:
     try:
         proc = subprocess.run(cmd, capture_output=True, text=True, check=False)
     except FileNotFoundError as e:
-        raise DownloadError("yt-dlp binary not found. Install with `pip install yt-dlp` or `brew install yt-dlp`.") from e
+        raise DownloadError(
+            "yt-dlp binary not found. Install with `pip install yt-dlp` or `brew install yt-dlp`."
+        ) from e
 
     if proc.returncode != 0:
         raise DownloadError(f"yt-dlp failed: {proc.stderr[-500:]}")
@@ -42,7 +46,11 @@ def download_audio(url: str, out_dir: Path, prefer_mp3: bool = True) -> Path:
     if audio_file is None:
         # Fallback: pick the newest mp3/m4a in out_dir
         candidates = sorted(
-            [p for p in out_dir.iterdir() if p.suffix.lower() in {".mp3", ".m4a", ".webm", ".opus", ".wav"}],
+            [
+                p
+                for p in out_dir.iterdir()
+                if p.suffix.lower() in {".mp3", ".m4a", ".webm", ".opus", ".wav"}
+            ],
             key=lambda p: p.stat().st_mtime,
             reverse=True,
         )
@@ -52,7 +60,7 @@ def download_audio(url: str, out_dir: Path, prefer_mp3: bool = True) -> Path:
     return audio_file
 
 
-def _find_result_file(stdout: str, out_dir: Path) -> Optional[Path]:
+def _find_result_file(stdout: str, out_dir: Path) -> Path | None:
     # yt-dlp prints lines like:
     # [ExtractAudio] Destination: /path/to/yt_XXX.mp3
     # [download] /path/to/yt_XXX.mp3 has already been downloaded

@@ -50,6 +50,19 @@ tunefinder serve
 
 Open <http://127.0.0.1:8000> in your browser to use the UI.
 
+## 🔍 How does it work?
+
+Given a URL, tunefinder runs a 4-stage pipeline:
+
+1. **Download & extract audio** — `yt-dlp` fetches the video, ffmpeg strips it to `mp3`.
+2. **Fingerprint** — Shazamio turns the audio into a **spectrogram**, keeps only local energy peaks (this is what makes it noise-proof), and pairs neighboring peaks into ~10k compact `(f₁, f₂, Δt)` hashes.
+3. **Match** — those hashes are POSTed to Shazam's public API. The server intersects them with its ~20M-song index and, crucially, checks that the matching hashes **line up in time** (histogram of `db_offset − query_offset` has a sharp peak) — that's why one right song beats thousands of coincidental hits.
+4. **Normalize** — the deeply-nested Shazam JSON is flattened into a stable `RecognitionResult` (title / artist / album / ISRC / links) so CLI, Web, and future backends share one contract.
+
+End-to-end latency in practice: **~3–8 s**, dominated by download + a single Shazam round trip.
+
+📖 Full walkthrough with diagrams, the fingerprint algorithm, and failure modes → [docs/how-it-works.md](docs/how-it-works.md).
+
 ## 🧠 Industry survey of music-recognition tech
 
 See [docs/tech-survey.md](docs/tech-survey.md) for a full comparison of Shazam / ACRCloud / AudD / Chromaprint / Dejavu / NeuralFP across accuracy, latency, cost and use cases.
@@ -62,7 +75,8 @@ tunefinder/
 ├── requirements.txt
 ├── README.md
 ├── docs/
-│   └── tech-survey.md         # Industry survey
+│   ├── tech-survey.md         # Industry survey
+│   └── how-it-works.md        # End-to-end pipeline explainer
 ├── src/tunefinder/
 │   ├── __init__.py
 │   ├── config.py              # Config (download dir, backend, …)
